@@ -48,9 +48,9 @@ RUN \
     tar zxvf \
         /tmp/nginxproxymanager.tar.gz \
         --strip 1 -C /app
-# RUN \
-#   for i in /usr/src/*.patch; do \
-#        patch -d /app -p 1 < "${i}"; done
+RUN \
+    for i in /usr/src/*.patch; do \
+        patch -d /app -p 1 < "${i}"; done
 RUN \
     cd /app/frontend \
     && yarn install \
