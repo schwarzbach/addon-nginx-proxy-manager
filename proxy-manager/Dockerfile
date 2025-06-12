@@ -25,16 +25,16 @@ RUN \
         python3-dev
 RUN \
     apk add --no-cache \
-        apache2-utils=2.4.62-r0 \
+        apache2-utils \
         certbot \
-        libcap=2.71-r0 \
-        logrotate=3.21.0-r1 \
+        libcap \
+        logrotate \
         nginx-mod-stream \
         nginx \
-        openssl=3.3.3-r0 \
-        py3-pip=24.3.1-r0 \
-        python3=3.12.10-r1 \
-        yarn=1.22.22-r1
+        openssl \
+        py3-pip \
+        python3 \
+        yarn
 RUN \
     pip3 install -r /tmp/requirements.txt
 RUN \
