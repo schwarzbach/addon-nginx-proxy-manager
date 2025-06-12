@@ -13,7 +13,7 @@ COPY requirements.txt /tmp/
 COPY patches/*.patch /usr/src/
 
 # Setup base
-ARG NGINX_PROXY_MANAGER_VERSION="v2.11.0"
+ARG NGINX_PROXY_MANAGER_VERSION="v2.12.3"
 # hadolint ignore=DL3003,DL3042
 RUN \
     apk add --no-cache --virtual .build-dependencies \
@@ -26,11 +26,11 @@ RUN \
     \
     && apk add --no-cache \
         apache2-utils=2.4.62-r0 \
-        certbot=3.0.1-r0 \
+        certbot \
         libcap=2.71-r0 \
         logrotate=3.21.0-r1 \
-        nginx-mod-stream=1.26.3-r0 \
-        nginx=1.26.3-r0 \
+        nginx-mod-stream \
+        nginx \
         openssl=3.3.3-r0 \
         py3-pip=24.3.1-r0 \
         python3=3.12.10-r1 \
@@ -41,7 +41,7 @@ RUN \
     && yarn global add modclean \
     \
     && curl -J -L -o /tmp/nginxproxymanager.tar.gz \
-        "https://github.com/NginxProxyManager/nginx-proxy-manager/archive/v2.11.0.tar.gz" \
+        "https://github.com/NginxProxyManager/nginx-proxy-manager/archive/v2.12.3.tar.gz" \
     && mkdir /app \
     && tar zxvf \
         /tmp/nginxproxymanager.tar.gz \
