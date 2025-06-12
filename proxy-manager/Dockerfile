@@ -43,12 +43,13 @@ RUN \
     curl -J -L -o /tmp/nginxproxymanager.tar.gz \
         "https://github.com/NginxProxyManager/nginx-proxy-manager/archive/v2.12.3.tar.gz"
 RUN \
-    mkdir /app \
-    && tar zxvf \
+    mkdir /app
+RUN \
+    tar zxvf \
         /tmp/nginxproxymanager.tar.gz \
-        --strip 1 -C /app \
-    \
-    && for i in /usr/src/*.patch; do \
+        --strip 1 -C /app
+RUN \
+    for i in /usr/src/*.patch; do \
         patch -d /app -p 1 < "${i}"; done
 RUN \
     cd /app/frontend \
