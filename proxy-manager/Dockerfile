@@ -55,17 +55,17 @@ RUN \
     cd /app/frontend \
     && yarn install \
     && yarn build \
-    && rm -rf node_modules \
-    \
-    && mkdir -p /opt/nginx-proxy-manager/frontend \
-    && cp -r /app/frontend/dist/. /opt/nginx-proxy-manager/frontend/ \
-    \
-    && cd /app/backend \
+    && rm -rf node_modules
+RUN \
+    mkdir -p /opt/nginx-proxy-manager/frontend \
+    && cp -r /app/frontend/dist/. /opt/nginx-proxy-manager/frontend/
+RUN \
+    cd /app/backend \
     && yarn install \
     && rm -rf node_modules \
-    && cp -r /app/backend/. /opt/nginx-proxy-manager/ \
-    \
-    && cp -R /app/global/. /opt/nginx-proxy-manager/global/ \
+    && cp -r /app/backend/. /opt/nginx-proxy-manager/
+RUN \
+    cp -R /app/global/. /opt/nginx-proxy-manager/global/ \
     \
     && cd /opt/nginx-proxy-manager \
     && yarn install \
@@ -77,29 +77,29 @@ RUN \
     && rm -f /etc/nginx/conf.d/dev.conf \
     \
     && cp /app/docker/rootfs/etc/letsencrypt.ini /etc \
-    && cp /app/docker/rootfs/etc/logrotate.d/nginx-proxy-manager /etc/logrotate.d \
-    \
-    && sed -i "s#user npm;#user root;#" /etc/nginx/nginx.conf \
+    && cp /app/docker/rootfs/etc/logrotate.d/nginx-proxy-manager /etc/logrotate.d
+RUN \
+    sed -i "s#user npm;#user root;#" /etc/nginx/nginx.conf \
     && sed -i "s#root /app/frontend;#root /opt/nginx-proxy-manager/frontend;#" \
         /etc/nginx/conf.d/production.conf \
     && sed -i "s#table.string('id').notNull().primary();#table.string('id', 32).notNull().primary();#" \
         /opt/nginx-proxy-manager/migrations/20190227065017_settings.js \
     \
     && mkdir -p \
-        /run/nginx \
-    \
-    && modclean \
+        /run/nginx
+RUN \
+    modclean \
         --path /opt/nginx-proxy-manager \
         --no-progress \
         --keep-empty \
-        --run \
-    \
-    && yarn global remove modclean \
-    && yarn cache clean \
-    \
-    && apk del --purge .build-dependencies \
-    \
-    && rm -f -r \
+        --run
+RUN \
+    yarn global remove modclean \
+    && yarn cache clean
+RUN \
+    apk del --purge .build-dependencies
+RUN \
+    rm -f -r \
         /app \
         /etc/init.d/nginx \
         /etc/logrotate.d/nginx \
