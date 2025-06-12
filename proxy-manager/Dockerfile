@@ -23,7 +23,7 @@ RUN \
         openssl-dev=3.3.3-r0 \
         patch=2.7.6-r10 \
         python3-dev=3.12.10-r1
-RUN
+RUN \
     apk add --no-cache \
         apache2-utils=2.4.62-r0 \
         certbot \
@@ -35,22 +35,23 @@ RUN
         py3-pip=24.3.1-r0 \
         python3=3.12.10-r1 \
         yarn=1.22.22-r1
-RUN
+RUN \
     pip3 install -r /tmp/requirements.txt
-RUN
+RUN \
     yarn global add modclean
-RUN
+RUN \
     curl -J -L -o /tmp/nginxproxymanager.tar.gz \
-        "https://github.com/NginxProxyManager/nginx-proxy-manager/archive/v2.12.3.tar.gz" \
-    && mkdir /app \
+        "https://github.com/NginxProxyManager/nginx-proxy-manager/archive/v2.12.3.tar.gz"
+RUN \
+    mkdir /app \
     && tar zxvf \
         /tmp/nginxproxymanager.tar.gz \
         --strip 1 -C /app \
     \
     && for i in /usr/src/*.patch; do \
-        patch -d /app -p 1 < "${i}"; done \
-    \
-    && cd /app/frontend \
+        patch -d /app -p 1 < "${i}"; done
+RUN \
+    cd /app/frontend \
     && yarn install \
     && yarn build \
     && rm -rf node_modules \
